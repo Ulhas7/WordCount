@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -61,22 +63,53 @@ function App() {
     const wordsToDisplay = showAll ? allWords.slice(0, n) : allWords.slice(0, Math.min(n, 10));
 
     const chartData = {
-      labels: wordsToDisplay.map((word, index) => `${index + 1}. ${word.word}`),
-      datasets: [
-          {
-              label: 'Word Count',
-              data: wordsToDisplay.map(word => word.count),
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-          },
-      ],
-  };
-  
+        labels: wordsToDisplay.map((word, index) => `${index + 1}. ${word.word}`),
+        datasets: [
+            {
+                label: 'Word Count',
+                data: wordsToDisplay.map(word => word.count),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    // Function to download PDF with both List and Graph views
+    const downloadPDF = () => {
+        const pdf = new jsPDF();
+
+        // 1. Capture List View
+        const listView = document.getElementById('listView');
+        if (listView) {
+            pdf.text("Top Words List View", 10, 10);
+            pdf.setFontSize(12);
+            listView.querySelectorAll('li').forEach((li, index) => {
+                pdf.text(`${index + 1}. ${li.textContent}`, 10, 20 + index * 10);
+            });
+        }
+
+        // 2. Capture Graph View
+        const graphView = document.getElementById('graphView');
+        if (graphView) {
+            pdf.addPage();  // Start a new page for the graph
+            pdf.text("Graph View", 10, 10);
+
+            html2canvas(graphView).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 180;  // Scale image to fit in PDF
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                pdf.addImage(imgData, 'PNG', 10, 20, imgWidth, imgHeight);
+                pdf.save("word_frequency.pdf");
+            });
+        } else {
+            pdf.save("word_frequency.pdf");
+        }
+    };
 
     return (
         <div className="container">
-            <h1>Word Frequency Counter </h1>
+            <h1>Word Frequency Counter</h1>
             <form onSubmit={handleSubmit} className="form">
                 <div className="input-group">
                     <label htmlFor="url">URL:</label>
@@ -104,6 +137,9 @@ function App() {
                 <button type="button" onClick={handleClear} className="clear-btn">
                     Clear
                 </button>
+                <button type="button" onClick={downloadPDF} className="download-btn">
+                    Download PDF
+                </button>
             </form>
 
             {loading && <div className="loading">Loading...</div>}
@@ -118,7 +154,7 @@ function App() {
             </div>
 
             {viewType === 'list' && allWords.length > 0 && (
-                <div className="results">
+                <div id="listView" className="results">
                     <h2>Top {n} Most Frequent Words of {allWords.length}:</h2>
                     <ul>
                         {wordsToDisplay.map((word, index) => (
@@ -139,14 +175,7 @@ function App() {
             )}
 
             {viewType === 'graph' && allWords.length > 0 && (
-                <div className="graph">
-                  
-                    {!showAll && n > 10 && (
-                      <button onClick={() => setShowAll(true)}>Show All</button>
-                    )}
-                    {showAll && (
-                      <button onClick={() => setShowAll(false)}>Show Less</button>
-                    )}
+                <div id="graphView" className="graph">
                     <Bar
                         data={chartData}
                         options={{
@@ -154,6 +183,12 @@ function App() {
                             plugins: { title: { display: true, text: `Top ${n} Words of ${allWords.length} words` } },
                         }}
                     />
+                    {!showAll && n > 10 && (
+                        <button onClick={() => setShowAll(true)}>Show All</button>
+                    )}
+                    {showAll && (
+                        <button onClick={() => setShowAll(false)}>Show Less</button>
+                    )}
                 </div>
             )}
         </div>

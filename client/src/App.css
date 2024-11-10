@@ -282,3 +282,18 @@ button:hover {
   transform: scale(1.05);
   background-color: #f57f17; /* Darker yellow on hover */
 }
+
+.download-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.download-btn:hover {
+  background-color: #45a049;
+}
