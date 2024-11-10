@@ -1,0 +1,16 @@
+# Node modules (npm packages)
+node_modules/
+
+# Build output
+build/
+dist/
+
+# Dependency directories
+jspm_packages/
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
