@@ -3,6 +3,8 @@ const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
 const app = express();
+const cors = require('cors');
+app.use(cors());
 app.use(express.json());
 
 app.post('/count-word', async (req, res) => {
@@ -37,4 +39,4 @@ app.post('/count-word', async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+app.listen(5000, () => console.log('Server running on port 5000'));
