@@ -17,16 +17,17 @@ body {
 h1 {
   color: #333;
   font-size: 2em;
+  font-style: italic;
 }
 
 .form {
-  background-color: #fff;
+  background-color: #f0ececcc;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -88,7 +89,7 @@ button {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -201,7 +202,7 @@ strong {
 
 /* Button styling for Show More/Show Less */
 button {
-  margin-top: 15px;
+  margin: 15px;
   padding: 10px 20px;
   cursor: pointer;
   font-size: 16px;
@@ -211,7 +212,7 @@ button:hover {
   background-color: #ddd;
 }
 .container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   background: rgba(255, 255, 255, 0.8); /* semi-transparent background */
@@ -230,4 +231,54 @@ input::placeholder {
 .submit-btn:hover {
   transform: scale(1.05);
   transition: transform 0.2s;
+}
+/* For Clear Button */
+.clear-btn {
+  background-color: #f44336; /* Red background */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.clear-btn:hover {
+  transform: scale(1.05);
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* For Show All Button */
+button {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: #388e3c; /* Darker green on hover */
+}
+
+/* For Show Less Button */
+button {
+  background-color: #fbc02d; /* Yellow background */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: #f57f17; /* Darker yellow on hover */
 }

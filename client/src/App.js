@@ -76,7 +76,7 @@ function App() {
 
     return (
         <div className="container">
-            <h1>Word Frequency Counter</h1>
+            <h1>Word Frequency Counter </h1>
             <form onSubmit={handleSubmit} className="form">
                 <div className="input-group">
                     <label htmlFor="url">URL:</label>
@@ -119,7 +119,7 @@ function App() {
 
             {viewType === 'list' && allWords.length > 0 && (
                 <div className="results">
-                    <h2>Top {n} Most Frequent Words:</h2>
+                    <h2>Top {n} Most Frequent Words of {allWords.length}:</h2>
                     <ul>
                         {wordsToDisplay.map((word, index) => (
                             <li key={index} className="tooltip-container">
@@ -140,6 +140,7 @@ function App() {
 
             {viewType === 'graph' && allWords.length > 0 && (
                 <div className="graph">
+                  
                     {!showAll && n > 10 && (
                       <button onClick={() => setShowAll(true)}>Show All</button>
                     )}
@@ -150,7 +151,7 @@ function App() {
                         data={chartData}
                         options={{
                             responsive: true,
-                            plugins: { title: { display: true, text: 'Top Words Frequency' } },
+                            plugins: { title: { display: true, text: `Top ${n} Words of ${allWords.length} words` } },
                         }}
                     />
                 </div>
